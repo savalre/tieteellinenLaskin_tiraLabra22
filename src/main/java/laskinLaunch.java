@@ -19,7 +19,7 @@ public class laskinLaunch  {
                 "Syötä laskutoimitus muodossa <A*B> ja käytä vain kahta operandia.");
         String syote = launch.lueSyote();
 
-        System.out.println("Postfix on " + syote);
+        System.out.println("Tulos: " + syote);
 
     }
 
@@ -32,11 +32,11 @@ public class laskinLaunch  {
     }
 
     public String kasitteleInfix(String infix){
-        //List<Character> jono = new ArrayList<Character>();
+
         for(int i = 0; i < infix.length(); i++){
             char merkki = infix.charAt(i);
             Boolean luku = Character.isDigit(merkki);
-            System.out.println(merkki + " onko luku? " + luku);
+
             if(luku){
                 this.jono.add(merkki);
             } else {
@@ -44,12 +44,54 @@ public class laskinLaunch  {
             }
         }
 
-        return "jee";
+        jono.add(pino.pop().charAt(0));
+
+
+        StringBuffer puhveri = new StringBuffer();
+
+        for (Character c : jono) {
+            puhveri.append(c);
+        }
+
+        String tulos = kasittelePostfix(puhveri.toString());
+
+        return tulos;
     }
 
 
-    public static void kasittelePostfix(){
+    public String kasittelePostfix(String postfix){
+        for(int i = 0; i < postfix.length(); i++){
+            char merkki = postfix.charAt(i);
+            Boolean luku = Character.isDigit(merkki);
+            System.out.println(merkki + " onko luku? " + luku);
+            if(luku){
+                this.pino.add(String.valueOf(merkki));
+            } else {
+                char operaattori = merkki;
+                int toinenOperandi = Integer.valueOf(this.pino.pop());
+                int ensimmäinenOperandi = Integer.valueOf(this.pino.pop());
+                if(operaattori == '+'){
+                    int tulos = ensimmäinenOperandi + toinenOperandi;
+                    this.pino.push(String.valueOf(tulos));
+                }
+                if(operaattori == '-'){
+                    int tulos = ensimmäinenOperandi - toinenOperandi;
+                    this.pino.push(String.valueOf(tulos));
+                }
 
+                if(operaattori == '/'){
+                    int tulos = ensimmäinenOperandi / toinenOperandi;
+                    this.pino.push(String.valueOf(tulos));
+                }
+
+                if(operaattori == '*'){
+                    int tulos = ensimmäinenOperandi * toinenOperandi;
+                    this.pino.push(String.valueOf(tulos));
+                }
+            }
+        }
+
+        return pino.pop();
     }
 
 }

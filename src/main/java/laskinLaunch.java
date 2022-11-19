@@ -16,16 +16,24 @@ public class laskinLaunch  {
         System.out.println("---- TIETEELLINEN LASKIN v.0.5 ----");
         System.out.println("Kirjoita laskutoimitus.\nVoit" +
                 " valita operaattorit [+ - / *].\n" +
-                "Syötä laskutoimitus muodossa <A*B> ja käytä vain kahta operandia.");
-        String syote = launch.lueSyote();
-
-        System.out.println("Tulos: " + syote);
+                "Syötä laskutoimitus muodossa <A*B>. Voit käytää vain kahta operandia (lukuja 0-9) ja yhtä operaattoria");
+        while(true){
+            String syote = launch.lueSyote();
+            if(syote.equals("loppu")){
+                System.out.println("Näkemiin!");
+                break;
+            }
+            System.out.println("Tulos: " + syote);
+        }
 
     }
 
     public String lueSyote(){
         Scanner lukija = new Scanner(System.in);
         String infix = lukija.nextLine();
+        if(infix.equals("0")){
+            return "loppu";
+        }
         String postfix = kasitteleInfix(infix);
         return postfix;
 
@@ -63,7 +71,6 @@ public class laskinLaunch  {
         for(int i = 0; i < postfix.length(); i++){
             char merkki = postfix.charAt(i);
             Boolean luku = Character.isDigit(merkki);
-            System.out.println(merkki + " onko luku? " + luku);
             if(luku){
                 this.pino.add(String.valueOf(merkki));
             } else {

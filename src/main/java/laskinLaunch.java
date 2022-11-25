@@ -1,4 +1,3 @@
-import java.io.*;
 import java.util.*;
 
 public class laskinLaunch  {
@@ -6,7 +5,7 @@ public class laskinLaunch  {
     public Stack<String> pino;
 
     public laskinLaunch() {
-        this.jono = new ArrayList<Character>();
+        this.jono = new ArrayList<>();
         this.pino = new Stack<>();
     }
 
@@ -34,36 +33,71 @@ public class laskinLaunch  {
         if(infix.equals("0")){
             return "loppu";
         }
-        String postfix = kasitteleInfix(infix);
-        return postfix;
+        return kasitteleInfix(infix);
 
     }
 
-    public String kasitteleInfix(String infix){
+    public String kasitteleInfix(String syote){
 
-        for(int i = 0; i < infix.length(); i++){
-            char merkki = infix.charAt(i);
+        boolean error = false;
+
+        String infix = "";
+
+        for(int i = 0; i < syote.length(); i++){
+            char merkki = syote.charAt(i);
             Boolean luku = Character.isDigit(merkki);
 
             if(luku){
-                this.jono.add(merkki);
+                infix += merkki;
             } else {
-                this.pino.push(String.valueOf(merkki));
+                if(!(this.pino.isEmpty())){
+
+                        /*if(merkkiPinoon.equals(")")){
+                    //jos ")", niin poppopqueueueue kunnes löytyy "(" ->
+                    //kun löytyy, lopeta popitus ja jatka
+                    //jos pino empty == ei löydy "(" heitä error ja palauta "hv anna kunnon syöte"
+                    }*/
+
+                if(tarkistaOperaattorinTarkeys(merkki) <= tarkistaOperaattorinTarkeys(pino.peek().charAt(0))){
+                    infix += pino.pop();
+                }
+                }
+
+                //jos merkkiPinoon tärkeys > kuin pinonEka
+                    //==> pushaa stackiin
+                //oletus että merkki on tärkeydeltään >= kuin pinossa oleva, jolloin se menee pinon päällimmäiseksi
+                this.pino.add(String.valueOf(merkki));
             }
         }
 
-        jono.add(pino.pop().charAt(0));
-
-
-        StringBuffer puhveri = new StringBuffer();
-
-        for (Character c : jono) {
-            puhveri.append(c);
+        if(error){
+            return "Virheellinen syöte, ole hyvä ja tarkista!";
         }
 
-        String tulos = kasittelePostfix(puhveri.toString());
+        while(!pino.isEmpty()){
+            infix += pino.pop();
+        }
 
-        return tulos;
+        System.out.println("stackki on " + this.pino);
+
+
+        System.out.println("infix on " + infix);
+
+        return kasittelePostfix(infix);
+    }
+
+    public Integer tarkistaOperaattorinTarkeys(Character c){
+        if((c == '+') || (c =='-')){
+            return 1;
+        }
+
+        if((c == '*') || (c == '/')){
+            return 2;
+        }
+
+        //oletetaan operaattorin olevan ^
+
+        return -1;
     }
 
 
@@ -75,8 +109,8 @@ public class laskinLaunch  {
                 this.pino.add(String.valueOf(merkki));
             } else {
                 char operaattori = merkki;
-                int toinenOperandi = Integer.valueOf(this.pino.pop());
-                int ensimmäinenOperandi = Integer.valueOf(this.pino.pop());
+                int toinenOperandi = Integer.parseInt(this.pino.pop());
+                int ensimmäinenOperandi = Integer.parseInt(this.pino.pop());
                 if(operaattori == '+'){
                     int tulos = ensimmäinenOperandi + toinenOperandi;
                     this.pino.push(String.valueOf(tulos));
@@ -100,5 +134,6 @@ public class laskinLaunch  {
 
         return pino.pop();
     }
+
 
 }

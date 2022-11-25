@@ -1,24 +1,24 @@
 import java.util.*;
 
-public class laskinLaunch  {
+public class LaskinLaunch {
     public List<Character> jono;
     public Stack<String> pino;
 
-    public laskinLaunch() {
+    public LaskinLaunch() {
         this.jono = new ArrayList<>();
         this.pino = new Stack<>();
     }
 
 
     public static void main(String[] args) {
-        laskinLaunch launch = new laskinLaunch();
+        LaskinLaunch launch = new LaskinLaunch();
         System.out.println("---- TIETEELLINEN LASKIN v.0.5 ----");
         System.out.println("Kirjoita laskutoimitus.\nVoit" +
                 " valita operaattorit [+ - / *].\n" +
                 "Syötä laskutoimitus muodossa <A*B>. Voit käytää vain kahta operandia (lukuja 0-9) ja yhtä operaattoria");
-        while(true){
+        while (true) {
             String syote = launch.lueSyote();
-            if(syote.equals("loppu")){
+            if (syote.equals("loppu")) {
                 System.out.println("Näkemiin!");
                 break;
             }
@@ -27,105 +27,109 @@ public class laskinLaunch  {
 
     }
 
-    public String lueSyote(){
+    public String lueSyote() {
         Scanner lukija = new Scanner(System.in);
         String infix = lukija.nextLine();
-        if(infix.equals("0")){
+        if (infix.equals("0")) {
             return "loppu";
         }
         return kasitteleInfix(infix);
 
     }
 
-    public String kasitteleInfix(String syote){
+    public String kasitteleInfix(String syote) {
 
         boolean error = false;
 
         String infix = "";
 
-        for(int i = 0; i < syote.length(); i++){
+        for (int i = 0; i < syote.length(); i++) {
             char merkki = syote.charAt(i);
-            Boolean luku = Character.isDigit(merkki);
 
-            if(luku){
+            if (Character.isDigit(merkki)) {
+
                 infix += merkki;
-            } else {
-                if(!(this.pino.isEmpty())){
 
-                        /*if(merkkiPinoon.equals(")")){
-                    //jos ")", niin poppopqueueueue kunnes löytyy "(" ->
-                    //kun löytyy, lopeta popitus ja jatka
-                    //jos pino empty == ei löydy "(" heitä error ja palauta "hv anna kunnon syöte"
-                    }*/
+            } else if (merkki == '(') {
 
-                if(tarkistaOperaattorinTarkeys(merkki) <= tarkistaOperaattorinTarkeys(pino.peek().charAt(0))){
+                pino.push(String.valueOf(merkki));
+
+            } else if (merkki == ')') {
+
+                while (!pino.isEmpty() && !("(".equals(pino.peek()))) {
                     infix += pino.pop();
                 }
+
+                pino.pop();
+                //jos ")", niin poppopqueueueue kunnes löytyy "(" ->
+                //kun löytyy, lopeta popitus ja jatka
+                //jos pino empty == ei löydy "(" heitä error ja palauta "hv anna kunnon syöte"
+            } else {
+
+                while (!(pino.isEmpty()) && tarkistaOperaattorinTarkeys(merkki) <= tarkistaOperaattorinTarkeys(pino.peek().charAt(0))) {
+                    infix += pino.pop();
                 }
 
-                //jos merkkiPinoon tärkeys > kuin pinonEka
-                    //==> pushaa stackiin
-                //oletus että merkki on tärkeydeltään >= kuin pinossa oleva, jolloin se menee pinon päällimmäiseksi
-                this.pino.add(String.valueOf(merkki));
+                this.pino.push(String.valueOf(merkki));
+
             }
+
         }
 
-        if(error){
+
+        if (error) {
             return "Virheellinen syöte, ole hyvä ja tarkista!";
         }
 
-        while(!pino.isEmpty()){
+        while (!pino.isEmpty()) {
             infix += pino.pop();
         }
-
+        
         System.out.println("stackki on " + this.pino);
-
 
         System.out.println("infix on " + infix);
 
         return kasittelePostfix(infix);
     }
 
-    public Integer tarkistaOperaattorinTarkeys(Character c){
-        if((c == '+') || (c =='-')){
+    public Integer tarkistaOperaattorinTarkeys(Character c) {
+        if ((c == '+') || (c == '-')) {
             return 1;
         }
 
-        if((c == '*') || (c == '/')){
+        if ((c == '*') || (c == '/')) {
             return 2;
         }
-
-        //oletetaan operaattorin olevan ^
-
         return -1;
     }
 
 
-    public String kasittelePostfix(String postfix){
-        for(int i = 0; i < postfix.length(); i++){
+    public String kasittelePostfix(String postfix) {
+
+        for (int i = 0; i < postfix.length(); i++) {
             char merkki = postfix.charAt(i);
-            Boolean luku = Character.isDigit(merkki);
-            if(luku){
-                this.pino.add(String.valueOf(merkki));
+
+            if (Character.isDigit(merkki)) {
+                this.pino.push(String.valueOf(merkki));
             } else {
                 char operaattori = merkki;
-                int toinenOperandi = Integer.parseInt(this.pino.pop());
-                int ensimmäinenOperandi = Integer.parseInt(this.pino.pop());
-                if(operaattori == '+'){
+                int toinenOperandi = Integer.valueOf(this.pino.pop());
+                int ensimmäinenOperandi = Integer.valueOf(this.pino.pop());
+                if (operaattori == '+') {
                     int tulos = ensimmäinenOperandi + toinenOperandi;
                     this.pino.push(String.valueOf(tulos));
                 }
-                if(operaattori == '-'){
+                if (operaattori == '-') {
                     int tulos = ensimmäinenOperandi - toinenOperandi;
                     this.pino.push(String.valueOf(tulos));
                 }
 
-                if(operaattori == '/'){
+                if (operaattori == '/') {
                     int tulos = ensimmäinenOperandi / toinenOperandi;
                     this.pino.push(String.valueOf(tulos));
                 }
 
-                if(operaattori == '*'){
+                if (operaattori == '*') {
                     int tulos = ensimmäinenOperandi * toinenOperandi;
                     this.pino.push(String.valueOf(tulos));
                 }

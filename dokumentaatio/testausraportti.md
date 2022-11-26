@@ -1,27 +1,14 @@
 <h1>Testausraportti</h1>
 
-
-<h3>Yksikkötestauksen kattavuusraportti</h3>
-nllaflåpel
-<br>
-<br>
-Näin alustavasti olen ajatellut että laskusyötteet ovat infix-syötteitä, jotka muunnetaan postfix-muotoon. Laskeminen tapahtuu postfixin purkamisella. Näihin tarvitaan kekoa ja jonoa, jotka aion toteuttaa itse. Näin saadaan ainakin peruslaskutoimitukset toimitettua, mutta täytyy tutkia tarkemmin miten funktiot ja muut vaikuttavat jonon ja pinon käyttöön.
-<br>
-<br>
-Projekti toteutetaan javalla. Koska olen käynyt TiRa-kurssit javalla (ja koodaan työkseni javaa), koen että ymmärrän sitä parhaiten vertaisarviointia ajatellen. Osaan myös jonkin verran pythonia (tehty pari peliä) joten silläkin tarvittaessa onnistuu vertaisarviointi.
-<br>
-<br>
 <h3>Ohjelman testaus</h3>
-- mitä testattu, miten testattu?
-- millaisilla syötteillä
-
-<h3>Yksikkötestien ajaminen<h3>
--miten testit voi ajaa
+Tällä hetkellä ohjelma on testattu vain ns. hyvän mielen yksikkötestein, eli vain läpimenevillä, tarkasti kontrolloiduilla syötteillä. Projektista
+puuttuu vielä ne kohdat, missä ohjelma reagoi esimerkiksi vääriin/epähyväksyttäviin syötteisiin. Koska implementaatio on vielä kesken, en nähnyt tarpeelliseksi vielä testata näitä kriittisiä paikkoja.<br>
+Käyttöliittymätestaus suoritetaan suurimmaksi osaksi manuaalisesti, mutta joitain metodeita pääluokasta testataan vielä yksikkötestein.<br>
 <br>
 <br>
-
-Yksikkötestauksen kattavuusraportti.
-Mitä on testattu, miten tämä tehtiin?
-Minkälaisilla syötteillä testaus tehtiin (vertailupainotteisissa töissä tärkeää)?
-Miten testit voidaan toistaa?
-Ohjelman toiminnan empiirisen testauksen tulosten esittäminen graafisessa muodossa.
+<h3>Yksikkötestien ajaminen ja kattavuusraportti</h3>
+Ohjelman yksikkötestit voi ajaa terminaalin kautta komennolla <bmaven clean test<b>.<br>
+Testikattavuusraportin voi luoda terminaalin kautta komennolla <b>mvn test jacoco:report</b>.
+<br><br>
+<h3>Yksikkötestien kattavuusraportti 26.11.22</h3><br><br>
+Löydät raportin kansiosta dokumentaatio.

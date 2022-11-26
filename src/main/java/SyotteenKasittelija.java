@@ -3,10 +3,12 @@ import java.util.*;
 public class SyotteenKasittelija {
     public List<Character> jono;
     public Stack<String> pino;
+    public String infix;
 
     public SyotteenKasittelija() {
         this.jono = new ArrayList<>();
         this.pino = new Stack<>();
+        this.infix = "";
     }
 
 
@@ -51,6 +53,8 @@ public class SyotteenKasittelija {
         while (!pino.isEmpty()) {
             infix += pino.pop();
         }
+
+        this.infix = infix;
 
         return kasittelePostfix(infix);
     }

@@ -12,15 +12,14 @@ public class SyotteenKasittelija {
 
     public String kasitteleInfix(String syote) {
 
-        boolean error = false;
-
         String infix = "";
 
         for (int i = 0; i < syote.length(); i++) {
             char merkki = syote.charAt(i);
 
-            if (Character.isDigit(merkki)) {
+            //metodi tarkista numero? eli jos merkki on numero = tarkista
 
+            if (Character.isDigit(merkki)) {
                 infix += merkki;
 
             } else if (merkki == '(') {

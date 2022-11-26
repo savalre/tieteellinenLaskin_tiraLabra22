@@ -1,12 +1,18 @@
 import java.util.*;
 
 public class LaskinLaunch {
+    /**
+     *
+     */
     public SyotteenKasittelija kasittelija;
 
     public LaskinLaunch() {
         this.kasittelija = new SyotteenKasittelija();
     }
 
+    /**
+     * @param args
+     */
 
     public static void main(String[] args) {
         LaskinLaunch launch = new LaskinLaunch();
@@ -25,13 +31,17 @@ public class LaskinLaunch {
 
     }
 
+    /**
+     * @return
+     */
+
     public String lueSyote() {
         Scanner lukija = new Scanner(System.in);
         String infix = lukija.nextLine();
         if (infix.equals("0")) {
             return "loppu";
         }
-        return kasittelija.kasitteleInfix(infix);
+        return kasittelija.infixPostfixiksi(infix);
 
     }
 

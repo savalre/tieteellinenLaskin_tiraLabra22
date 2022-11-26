@@ -14,8 +14,8 @@ public class SyotteenKasittelijaTest {
 
     @Test
     public void infixKasitellaanOikeinYhdellaOperaattorilla() {
-        kasittelija.kasitteleInfix("3+2");
-        String infix = kasittelija.infix;
+        kasittelija.infixPostfixiksi("3+2");
+        String infix = kasittelija.postfix;
         String oletus = "32+";
 
         assertEquals(oletus,infix);
@@ -23,8 +23,8 @@ public class SyotteenKasittelijaTest {
 
     @Test
     public void infixKasitellaanOikeinKahdellaEriarvoisellaOperaattorilla() {
-        kasittelija.kasitteleInfix("3+2*5");
-        String infix = kasittelija.infix;
+        kasittelija.infixPostfixiksi("3+2*5");
+        String infix = kasittelija.postfix;
         String oletus = "325*+";
 
         assertEquals(oletus,infix);
@@ -32,8 +32,8 @@ public class SyotteenKasittelijaTest {
 
     @Test
     public void infixKasitellaanOikeinSulkujenKanssa() {
-        kasittelija.kasitteleInfix("3-7*(6/2+3)");
-        String infix = kasittelija.infix;
+        kasittelija.infixPostfixiksi("3-7*(6/2+3)");
+        String infix = kasittelija.postfix;
         String oletus = "3762/3+*-";
 
         assertEquals(oletus,infix);
@@ -49,7 +49,7 @@ public class SyotteenKasittelijaTest {
 
     @Test
     public void operaattorinOllessaPlusTaiMiinusTarkeysOnYksi() {
-        int syote = kasittelija.tarkistaOperaattorinTarkeys('+');
+        int syote = kasittelija.operaattorinTarkeys('+');
         int tarkeys = 1;
 
         assertEquals(tarkeys,syote);
@@ -57,7 +57,7 @@ public class SyotteenKasittelijaTest {
 
     @Test
     public void operaattorinOllessaKertoTaiJakoTarkeysOnKaksi() {
-        int syote = kasittelija.tarkistaOperaattorinTarkeys('*');
+        int syote = kasittelija.operaattorinTarkeys('*');
         int tarkeys = 2;
 
         assertEquals(tarkeys,syote);
@@ -65,7 +65,7 @@ public class SyotteenKasittelijaTest {
 
     @Test
     public void operaattorinOllessaJokinMuuTarkeysOnMiinusYksi() {
-        int syote = kasittelija.tarkistaOperaattorinTarkeys('?');
+        int syote = kasittelija.operaattorinTarkeys('?');
         int tarkeys = -1;
 
         assertEquals(tarkeys,syote);

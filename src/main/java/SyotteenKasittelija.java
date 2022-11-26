@@ -1,28 +1,34 @@
 import java.util.*;
 
 public class SyotteenKasittelija {
-    public List<Character> jono;
+    /**
+     * Luokka käsittelee käyttäjän syöttämän laskutoimituksen. Annettu laskutoimitus
+     * on String-muotoinen. Konstruktorissa alustetaan algoritmin käyttämä pino, sekä String
+     * postfix johon syötteen postfix-muoto tallentuu.
+     */
     public Stack<String> pino;
-    public String infix;
+    public String postfix;
 
     public SyotteenKasittelija() {
-        this.jono = new ArrayList<>();
         this.pino = new Stack<>();
-        this.infix = "";
+        this.postfix = "";
     }
 
+    /**
+     * Shunting yard -algortmi käsittelee tässä metodissa infix-muotoisen, käyttäjän antaman
+     * syötteen postfix-muotoon myöhempää evaluaatiota varten.
+     * @param syote  käyttäjän terminaaliin syöttämä laskutoimitus (muoto esim. 3+2)
+     * @return  metodi palauttaa sitä kutsuneelle käyttöliittymälle postfixin evaluaation tuloksen.
+     */
+    public String infixPostfixiksi(String syote) {
 
-    public String kasitteleInfix(String syote) {
-
-        String infix = "";
+        String postfix = "";
 
         for (int i = 0; i < syote.length(); i++) {
             char merkki = syote.charAt(i);
 
-            //metodi tarkista numero? eli jos merkki on numero = tarkista
-
             if (Character.isDigit(merkki)) {
-                infix += merkki;
+                postfix += merkki;
 
             } else if (merkki == '(') {
 
@@ -31,17 +37,15 @@ public class SyotteenKasittelija {
             } else if (merkki == ')') {
 
                 while (!pino.isEmpty() && !("(".equals(pino.peek()))) {
-                    infix += pino.pop();
+                    postfix += pino.pop();
                 }
 
                 pino.pop();
-                //jos ")", niin poppopqueueueue kunnes löytyy "(" ->
-                //kun löytyy, lopeta popitus ja jatka
-                //jos pino empty == ei löydy "(" heitä error ja palauta "hv anna kunnon syöte"
+
             } else {
 
-                while (!(pino.isEmpty()) && tarkistaOperaattorinTarkeys(merkki) <= tarkistaOperaattorinTarkeys(pino.peek().charAt(0))) {
-                    infix += pino.pop();
+                while (!(pino.isEmpty()) && operaattorinTarkeys(merkki) <= operaattorinTarkeys(pino.peek().charAt(0))) {
+                    postfix += pino.pop();
                 }
 
                 this.pino.push(String.valueOf(merkki));
@@ -51,15 +55,21 @@ public class SyotteenKasittelija {
         }
 
         while (!pino.isEmpty()) {
-            infix += pino.pop();
+            postfix += pino.pop();
         }
 
-        this.infix = infix;
+        this.postfix = postfix;
 
-        return kasittelePostfix(infix);
+        return kasittelePostfix(this.postfix);
     }
 
-    public Integer tarkistaOperaattorinTarkeys(Character c) {
+    /**
+     * Metodi palauttaa operaattorin "tärkeyttä" vastaavan kokonaisluvun. Suuremman tärkeyden omaavat operaatiot
+     * suoritetaan ensin.
+     * @param c Operaattori jonka tärkeys arvioidaan
+     * @return  kokonaisluku operaattorille asetettujen arvojen mukaan, tai -1 jos tuntematon operaattori
+     */
+    public Integer operaattorinTarkeys(Character c) {
         if ((c == '+') || (c == '-')) {
             return 1;
         }
@@ -67,10 +77,15 @@ public class SyotteenKasittelija {
         if ((c == '*') || (c == '/')) {
             return 2;
         }
+
         return -1;
     }
 
-
+    /**
+     * Tässä suoritetaan postfix-muotoisen käyttäjäsyötteen evaluaatio, eli suoritetaan itse laskutoimitus.
+     * @param postfix käyttäjän syötteestä luotu postfix-notaation mukainen laskutoimitus
+     * @return  palauttaa laskutoimituksen tuloksen metodille infixPostfixiksi, joka palauttaa sen käyttäjälle
+     */
     public String kasittelePostfix(String postfix) {
 
         for (int i = 0; i < postfix.length(); i++) {
@@ -81,23 +96,23 @@ public class SyotteenKasittelija {
             } else {
                 char operaattori = merkki;
                 int toinenOperandi = Integer.valueOf(this.pino.pop());
-                int ensimmäinenOperandi = Integer.valueOf(this.pino.pop());
+                int ensimmainenOperandi = Integer.valueOf(this.pino.pop());
                 if (operaattori == '+') {
-                    int tulos = ensimmäinenOperandi + toinenOperandi;
+                    int tulos = ensimmainenOperandi + toinenOperandi;
                     this.pino.push(String.valueOf(tulos));
                 }
                 if (operaattori == '-') {
-                    int tulos = ensimmäinenOperandi - toinenOperandi;
+                    int tulos = ensimmainenOperandi - toinenOperandi;
                     this.pino.push(String.valueOf(tulos));
                 }
 
                 if (operaattori == '/') {
-                    int tulos = ensimmäinenOperandi / toinenOperandi;
+                    int tulos = ensimmainenOperandi / toinenOperandi;
                     this.pino.push(String.valueOf(tulos));
                 }
 
                 if (operaattori == '*') {
-                    int tulos = ensimmäinenOperandi * toinenOperandi;
+                    int tulos = ensimmainenOperandi * toinenOperandi;
                     this.pino.push(String.valueOf(tulos));
                 }
             }
@@ -105,5 +120,4 @@ public class SyotteenKasittelija {
 
         return pino.pop();
     }
-
 }

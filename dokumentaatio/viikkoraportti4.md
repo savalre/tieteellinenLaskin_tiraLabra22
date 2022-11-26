@@ -1,19 +1,16 @@
 <h1>Viikkoraportti 4</h1>
 <b>Mitä olen tehnyt tällä viikolla?</b><br>
-Tällä viikolla olen tapellut javafx:n kanssa. En saanut asettelua ja jarriksi pakkaamista toimimaan niinkuin olisin halunnut.
-Siksi hylkäsin sen kehittämisen ja keskityin pinon ja jonon implemointiin, ja sitä kautta myös sovelluslogiikan alkuun saamista.
-<br>
+Sain ohjelman perustoiminnallisuuden toteutettua. Lisäksi palauttelin mieleen coveragen käyttöä. <br>
 <br>
 <b>Miten ohjelma on edistynyt?</b><br>
 Ohjelman perusrunko on nyt valmis ja algoritmi toimii omasta mielestäni hyvin.
 <br>
 <br>
 <b>Mitä opin tällä viikolla?</b><br>
-Opin miten debugataan configuraatio-ongelmia, ja miten javalla toteutetaan jono. Lisäksi tutustuin tarkemmin shunting yardin toimintaan.
-<br>
+Postfix-notaatiolla tehtyjen lausekkeiden evaluoimista<br>
 <br>
 <b>Mikä jäi epäselväksi tai tuottanut vaikeuksia?</b><br>
-Suorituskykytestausta en ole kerinnyt aloittamaan, ja se tuntuu hieman vieraalta. Onko vinkkejä miten voi tälle projektille edes tehdä suorituskykytestausta?
+Suorituskykytestausta en ole kerinnyt aloittamaan, ja se tuntuu hieman vieraalta. Onko vinkkejä miten voi tälle projektille edes tehdä suorituskykytestausta? Epäselväksi minulle jäi myös testausdokumentin ohjeista löytyvä lause "Ohjelman toiminnan empiirisen testauksen tulosten esittäminen graafisessa muodossa", mitä tämä tarkoittaa?
 <br>
 <br>
 <b>Mitä teen seuraavaksi?</b><br>

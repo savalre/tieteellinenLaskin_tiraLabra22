@@ -25,7 +25,7 @@ public class SyotteenKasittelijaTest {
     public void infixKasitellaanOikeinKahdellaEriarvoisellaOperaattorilla() {
         kasittelija.kasitteleInfix("3+2*5");
         String infix = kasittelija.infix;
-        String oletus = "325*+"; 
+        String oletus = "325*+";
 
         assertEquals(oletus,infix);
     }
@@ -72,8 +72,27 @@ public class SyotteenKasittelijaTest {
     }
 
 
+    @Test
+    public void laskutoimitusOikeinYhdellaOperaattorilla() {
+        String tulos = kasittelija.kasittelePostfix("32+");
+        String oletus = "5";
 
-    /*Testejä:
-    *   kasittelePostfix*/
+        assertEquals(oletus,tulos);
+    }
 
+    @Test
+    public void laskutoimitusOikeinKahdellaEriarvoisellaOperaattorilla() {
+        String tulos = kasittelija.kasittelePostfix("325*+");
+        String oletus = "13";
+
+        assertEquals(oletus,tulos);
+    }
+
+    @Test
+    public void laskutoimitusOikeinKunLausekkeessaSulkuja() {
+        String tulos = kasittelija.kasittelePostfix("3762/3+*-");
+        String oletus = "-39";
+
+        assertEquals(oletus,tulos);
+    }
 }

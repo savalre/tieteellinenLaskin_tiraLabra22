@@ -1,18 +1,17 @@
 <h1>Viikkoraportti 5</h1>
 <b>Mitä olen tehnyt tällä viikolla?</b><br>
-Sain ohjelman perustoiminnallisuuden toteutettua. Lisäksi palauttelin mieleen coveragen käyttöä. <br>
+Tällä viikolla olen ollut kipeä, joten eteneminen on ollut hidasta. Lisäksi olen tehnyt vertaisarvion.<br>
 <br>
 <b>Miten ohjelma on edistynyt?</b><br>
-Ohjelman perusrunko on nyt valmis ja algoritmi toimii omasta mielestäni hyvin.
+Olen aloittanut validaattori-metodin tekemistä, sillä laskimen tulisi havaita esimerkiksi parittomat sulut.
 <br>
 <br>
 <b>Mitä opin tällä viikolla?</b><br>
-Postfix-notaatiolla tehtyjen lausekkeiden evaluoimista<br>
+Lukemaan toisen koodia vertaisarvion merkeissä.br>
 <br>
 <b>Mikä jäi epäselväksi tai tuottanut vaikeuksia?</b><br>
-Suorituskykytestausta en ole kerinnyt aloittamaan, ja se tuntuu hieman vieraalta. Onko vinkkejä miten voi tälle projektille edes tehdä suorituskykytestausta? Epäselväksi minulle jäi myös testausdokumentin ohjeista löytyvä lause "Ohjelman toiminnan empiirisen testauksen tulosten esittäminen graafisessa muodossa", mitä tämä tarkoittaa?
-<br>
+Tiedän mitä pitää tehdä, minulla on selvä suunnitelma jatkoa varten.<br>
 <br>
 <b>Mitä teen seuraavaksi?</b><br>
-Aion ensimmäisenä korjata sen, että sovellusta voisi käyttää niin että syötteestä tunnistetaan että esim '10' on yksi luku, eikä '1' ja '0'.
+Jatkan sovelluksen korjaamista, jotta sovellusta voisi käyttää niin että syötteestä tunnistetaan että esim '10' on yksi luku, eikä '1' ja '0'.
 Lisäksi aion alkaa toteuttamaan lisää ominaisuuksia, esim. miten saan potenssit laskettua, ja muuttujia lisättyä. Lisäksi pitää parannella dokumentaatiota.

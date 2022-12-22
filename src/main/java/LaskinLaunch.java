@@ -25,6 +25,8 @@ public class LaskinLaunch {
                 "<3> Poista muuttuja\n" +
                 "<0> Lopeta ohjelma\n");
         while (true) {
+            System.out.println("--------------------------------");
+
             if(!(muuttujat.isEmpty())){
                 System.out.println("Tallennetut muuttujat :");
                 System.out.println(muuttujat.toString());

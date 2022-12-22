@@ -31,7 +31,7 @@ public class SyotteenKasittelija {
 
         String postfix = "";
 
-        String[] palat = syote.split("(?<=[-+*/(),])|(?=[-+*/(),])");
+        String[] palat = syote.split("(?<=[-^+*/(),])|(?=[-^+*/(),])");
         for (int i = 0; i < palat.length; i++) {
             String merkki = palat[i];
 
@@ -90,6 +90,10 @@ public class SyotteenKasittelija {
             return 2;
         }
 
+        if ((c.equals("^"))){
+            return 3;
+        }
+
         return -1;
     }
 
@@ -99,7 +103,7 @@ public class SyotteenKasittelija {
      * @return  palauttaa laskutoimituksen tuloksen metodille infixPostfixiksi, joka palauttaa sen käyttäjälle
      */
     public String kasittelePostfix(String postfix) {
-        String[] lasku = postfix.split("(?<=[-+*/(),])|(?=[-+*/(),])");
+        String[] lasku = postfix.split("(?<=[-+*/^(),])|(?=[-+*/^(),])");
 
         for (int i = 0; i < lasku.length; i++) {
             String merkki = lasku[i];
@@ -109,10 +113,15 @@ public class SyotteenKasittelija {
             } else if (onNumero(merkki)) {
                 this.pino.push(merkki);
             } else {
+                System.out.println("operaattori " + merkki);
                 String operaattori = merkki;
                 Double toinenOperandi = Double.parseDouble(this.pino.pop());
                 Double ensimmainenOperandi = Double.parseDouble(this.pino.pop());
 
+                if (operaattori.equals("^")) {
+                    Double tulos = Math.pow(ensimmainenOperandi,toinenOperandi);
+                    this.pino.push(String.valueOf(tulos));
+                }
                 if (operaattori.equals("+")) {
                     Double tulos = ensimmainenOperandi + toinenOperandi;
                     this.pino.push(String.valueOf(tulos));

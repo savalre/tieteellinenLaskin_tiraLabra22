@@ -20,7 +20,11 @@ public class Muuttujat {
     }
 
     public void lisaa(String nimi, String arvo) {
-        this.muuttujat.put(nimi,arvo);
+        if(nimi.isEmpty() || arvo.isEmpty()){
+            System.out.println("Tarkista muuttuja!\n");
+        } else{
+            this.muuttujat.put(nimi,arvo);
+        }
     }
 
     @Override

@@ -110,25 +110,25 @@ public class SyotteenKasittelija {
                 this.pino.push(merkki);
             } else {
                 String operaattori = merkki;
-                int toinenOperandi = Integer.parseInt(this.pino.pop());
-                int ensimmainenOperandi = Integer.parseInt(this.pino.pop());
+                Double toinenOperandi = Double.parseDouble(this.pino.pop());
+                Double ensimmainenOperandi = Double.parseDouble(this.pino.pop());
 
                 if (operaattori.equals("+")) {
-                    int tulos = ensimmainenOperandi + toinenOperandi;
+                    Double tulos = ensimmainenOperandi + toinenOperandi;
                     this.pino.push(String.valueOf(tulos));
                 }
                 if (operaattori.equals("-")) {
-                    int tulos = ensimmainenOperandi - toinenOperandi;
+                    Double tulos = ensimmainenOperandi - toinenOperandi;
                     this.pino.push(String.valueOf(tulos));
                 }
 
                 if (operaattori.equals("/")) {
-                    int tulos = ensimmainenOperandi / toinenOperandi;
+                    Double tulos = ensimmainenOperandi / toinenOperandi;
                     this.pino.push(String.valueOf(tulos));
                 }
 
                 if (operaattori.equals("*")) {
-                    int tulos = ensimmainenOperandi * toinenOperandi;
+                    Double tulos = ensimmainenOperandi * toinenOperandi;
                     this.pino.push(String.valueOf(tulos));
                 }
             }
@@ -154,7 +154,7 @@ public class SyotteenKasittelija {
 
     private static boolean onNumero(String pala) {
         try {
-            Integer.parseInt(pala);
+            Double.parseDouble(pala);
             return true;
         } catch (NumberFormatException e) {
             return false;

@@ -19,12 +19,12 @@ public class LaskinLaunch {
     public static void main(String[] args) {
         LaskinLaunch launch = new LaskinLaunch();
         System.out.println("---- TIETEELLINEN LASKIN v.0.5 ----");
-        System.out.println("Komennot:\n" +
-                "<1> Kirjoita laskutoimitus\n" +
-                "<2> Lisää muuttuja\n" +
-                "<3> Poista muuttuja\n" +
-                "<0> Lopeta ohjelma\n");
         while (true) {
+            System.out.println("Komennot:\n" +
+                    "<1> Kirjoita laskutoimitus\n" +
+                    "<2> Lisää muuttuja\n" +
+                    "<3> Poista muuttuja\n" +
+                    "<0> Lopeta ohjelma");
             System.out.println("--------------------------------");
 
             if(!(muuttujat.isEmpty())){
@@ -55,7 +55,8 @@ public class LaskinLaunch {
         }
 
         if(komento.equals("1")){
-           System.out.println("Syötä laskutoimitus muodossa <A*B>. Voit käytää vain positiivisia kokonaislukuja. Operaattoreita [+ - / * ( )] voi käyttää vapaasti.\n" );
+           System.out.println("Syötä laskutoimitus muodossa <A*B>. Voit käytää vain positiivisia kokonaislukuja. Operaattoreita [+ - / * ( )] voi käyttää vapaasti.\n" +
+           "Valmiit funktiot: sqrt(arvo), sin(arvo), cos(arvo), tan(arvo), min(arvo,arvo), max(arvo,arvo)\n");
            komento = lukija.nextLine();
            return kasittelija.infixPostfixiksi(komento);
         }
@@ -74,7 +75,7 @@ public class LaskinLaunch {
             muuttujat.poista(nimi);
         }
 
-        return "Valitse komento\n";
+        return "";
 
     }
 

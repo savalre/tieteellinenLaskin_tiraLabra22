@@ -17,10 +17,11 @@ public class LaskinLaunch {
     public static void main(String[] args) {
         LaskinLaunch launch = new LaskinLaunch();
         System.out.println("---- TIETEELLINEN LASKIN v.0.5 ----");
-        System.out.println("Kirjoita laskutoimitus.\nVoit" +
-                " valita operaattorit [+ - / * ( )].\n" +
-                "Syötä laskutoimitus muodossa <A*B>. Voit käytää vain kahta operandia (lukuja 0-9). Operaattoreita voi käyttää vapaasti.\n" +
-                "Lopeta ohjelma syöttämällä 0.");
+        System.out.println("Komennot:\n" +
+                "<1>Kirjoita laskutoimitus\n" +
+                "<2> Lisää muuttuja\n" +
+                "<3> Poista muuttuja\n" +
+                "<0>Lopeta ohjelma");
         while (true) {
             String syote = launch.lueSyote();
             if (syote.equals("loppu")) {
@@ -38,11 +39,23 @@ public class LaskinLaunch {
 
     public String lueSyote() {
         Scanner lukija = new Scanner(System.in);
-        String infix = lukija.nextLine();
-        if (infix.equals("0")) {
+        String komento = lukija.nextLine();
+        
+        if (komento.equals("0")) {
             return "loppu";
         }
-        return kasittelija.infixPostfixiksi(infix);
+
+        if(komento.equals("1")){
+           System.out.println("Syötä laskutoimitus muodossa <A*B>. Voit käytää vain positiivisia kokonaislukuja. Operaattoreita [+ - / * ( )] voi käyttää vapaasti.\n" );
+           komento = lukija.nextLine();
+        }
+
+        if(komento.equals("3")){
+
+        }
+
+
+        return kasittelija.infixPostfixiksi(komento);
 
     }
 

@@ -66,6 +66,12 @@ public class LaskinLaunch {
             muuttujat.put(nimi,arvo);
         }
 
+        if(komento.equals("3")){
+            System.out.println("Mikä muuttuja poistetaan: ");
+            String nimi = lukija.nextLine();
+            muuttujat.remove(nimi);
+        }
+
         return "Valitse komento\n";
 
     }

@@ -5,11 +5,11 @@ public class LaskinLaunch {
      *
      */
     public SyotteenKasittelija kasittelija;
-    public static HashMap<String,String> muuttujat;
+    public static Muuttujat muuttujat;
 
     public LaskinLaunch() {
         this.kasittelija = new SyotteenKasittelija();
-        this.muuttujat = new HashMap<>();
+        this.muuttujat = new Muuttujat();
     }
 
     /**
@@ -27,7 +27,7 @@ public class LaskinLaunch {
         while (true) {
             if(!(muuttujat.isEmpty())){
                 System.out.println("Tallennetut muuttujat :");
-                System.out.println(muuttujat);
+                System.out.println(muuttujat.toString());
                 System.out.println("--------------------------------");
             }
             String syote = launch.lueSyote();
@@ -63,13 +63,13 @@ public class LaskinLaunch {
             String nimi = lukija.nextLine();
             System.out.println("Syötä arvo: ");
             String arvo = lukija.nextLine();
-            muuttujat.put(nimi,arvo);
+            muuttujat.lisaa(nimi,arvo);
         }
 
         if(komento.equals("3")){
             System.out.println("Mikä muuttuja poistetaan: ");
             String nimi = lukija.nextLine();
-            muuttujat.remove(nimi);
+            muuttujat.poista(nimi);
         }
 
         return "Valitse komento\n";

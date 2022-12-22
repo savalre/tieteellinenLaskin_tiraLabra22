@@ -35,6 +35,10 @@ public class SyotteenKasittelija {
         for (int i = 0; i < palat.length; i++) {
             String merkki = palat[i];
 
+            if(LaskinLaunch.muuttujat.muuttujat.containsKey(merkki)){
+                merkki = LaskinLaunch.muuttujat.getArvo(merkki);
+            }
+
             if (onNumero(merkki)) {
                 postfix += merkki+",";
 
@@ -130,7 +134,7 @@ public class SyotteenKasittelija {
             }
         }
 
-        String tulos = pino.pop();
+        String tulos = "Tulos: " +  pino.pop();
 
         return tulos;
     }

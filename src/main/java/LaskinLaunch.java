@@ -19,7 +19,8 @@ public class LaskinLaunch {
         System.out.println("---- TIETEELLINEN LASKIN v.0.5 ----");
         System.out.println("Kirjoita laskutoimitus.\nVoit" +
                 " valita operaattorit [+ - / * ( )].\n" +
-                "Syötä laskutoimitus muodossa <A*B>. Voit käytää vain kahta operandia (lukuja 0-9). Operaattoreita voi käyttää vapaasti.");
+                "Syötä laskutoimitus muodossa <A*B>. Voit käytää vain kahta operandia (lukuja 0-9). Operaattoreita voi käyttää vapaasti.\n" +
+                "Lopeta ohjelma syöttämällä 0.");
         while (true) {
             String syote = launch.lueSyote();
             if (syote.equals("loppu")) {

@@ -130,7 +130,7 @@ public class SyotteenKasittelija {
             }
         }
 
-        String tulos = pino.pop();
+        String tulos = "Tulos: " +  pino.pop();
 
         return tulos;
     }

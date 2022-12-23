@@ -55,8 +55,8 @@ public class LaskinLaunch {
         }
 
         if(komento.equals("1")){
-           System.out.println("Syötä laskutoimitus muodossa <A*B>. Voit käytää vain positiivisia kokonaislukuja. Operaattoreita [+ - / * ( ) ^] voi käyttää vapaasti.\n" +
-           "Valmiit funktiot: sqrt(arvo), sin(arvo), cos(arvo), tan(arvo), min(arvo,arvo), max(arvo,arvo)\n");
+           System.out.println("Syötä laskutoimitus muodossa <A*B>. Voit käytää vain positiivisia reaalilukuja. Operaattoreita [+ - / * ( ) ^] voi käyttää vapaasti.\n" +
+           "Valmiit funktiot: sqrt(arvo), sin(arvo), cos(arvo), tan(arvo)\n");
            komento = lukija.nextLine();
            return kasittelija.infixPostfixiksi(komento);
         }

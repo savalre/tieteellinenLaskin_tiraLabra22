@@ -33,6 +33,7 @@ public class SyotteenKasittelija {
         String postfix = "";
 
         String[] palat = syote.split("(?<=[-^+*/(),])|(?=[-^+*/(),])");
+
         for (int i = 0; i < palat.length; i++) {
             String merkki = palat[i];
 
@@ -44,25 +45,41 @@ public class SyotteenKasittelija {
                 postfix += merkki + ",";
 
             } else if (merkki.equals("(")) {
-
+                //System.out.println("löytyi (");
                 pino.push(merkki);
 
-
             } else if (merkki.equals(")")) {
-
+                //System.out.println("löytyi )");
                 while (!pino.isEmpty() && !(pino.peek().equals("("))) {
                     postfix += pino.pop();
+                    //System.out.println("postfix on nyt " + postfix);
                 }
 
                 pino.pop();
 
             } else {
-
+               // System.out.println("Operaattorin tarkeys  " + merkki + " = " + operaattorinTarkeys(merkki));
+               // System.out.println("onko isompi pinossa" + (!(pino.isEmpty()) && operaattorinTarkeys(merkki) <= operaattorinTarkeys(pino.peek())));
                 while (!(pino.isEmpty()) && operaattorinTarkeys(merkki) <= operaattorinTarkeys(pino.peek())) {
-                    postfix += pino.pop();
-                }
+                  //  System.out.println("Operaattorin tarkeys jonossa " + pino.peek() + " = " + operaattorinTarkeys(pino.peek()));
+                    if(onFunktio(pino.peek())){
+                      //  System.out.println("funktio lisätään");
+                        postfix += pino.pop()+",";
+                    }else{
+                        postfix += pino.pop();
 
-                this.pino.push(merkki);
+                    }
+                   // System.out.println("postfix " + postfix);
+                }
+                if(onFunktio(merkki)){
+                   // System.out.println("lisatty pinoon " + (merkki+","));
+                    this.pino.push(merkki+",");
+                }else{
+                   // System.out.println("lisatty pinoon " + merkki);
+
+                    this.pino.push(merkki);
+
+                }
 
             }
 
@@ -71,7 +88,7 @@ public class SyotteenKasittelija {
         while (!pino.isEmpty()) {
             postfix += pino.pop();
         }
-
+        System.out.println("postfix" + postfix);
         return kasittelePostfix(postfix);
     }
 
@@ -95,7 +112,7 @@ public class SyotteenKasittelija {
             return 3;
         }
 
-        if (c.equals("sin") || c.equals("tan") || c.equals("cos") || c.equals("sqrt")) {
+        if (c.contains("sin") || c.contains("tan") || c.contains("cos") || c.contains("sqrt")) {
             return 4;
         }
 
@@ -110,7 +127,7 @@ public class SyotteenKasittelija {
      */
     public String kasittelePostfix(String postfix) {
         String[] lasku = postfix.split("(?<=[-+*/^(),])|(?=[-+*/^(),])");
-        System.out.println(Arrays.toString(lasku));
+       // System.out.println(Arrays.toString(lasku));
 
         for (int i = 0; i < lasku.length; i++) {
             String merkki = lasku[i];
@@ -199,9 +216,12 @@ public class SyotteenKasittelija {
     }
 
     private static boolean onFunktio(String pala) {
-        if(pala.equals("sqrt") || pala.equals("sin") || pala.equals("cos") || pala.equals("tan")){
+        if(pala.contains("sqrt") ||  pala.contains("sin") || pala.contains("cos") || pala.contains("tan")){
+           // System.out.println("CONTAINS");
             return true;
         }
+
+        //System.out.println("NOT CONTAINS");
         return false;
     }
 

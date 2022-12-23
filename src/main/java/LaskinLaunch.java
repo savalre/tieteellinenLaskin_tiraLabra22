@@ -9,7 +9,7 @@ public class LaskinLaunch {
 
     public LaskinLaunch() {
         this.kasittelija = new SyotteenKasittelija();
-        this.muuttujat = new Muuttujat();
+        muuttujat = new Muuttujat();
     }
 
     /**
@@ -58,7 +58,12 @@ public class LaskinLaunch {
            System.out.println("Syötä laskutoimitus muodossa <A*B>. Voit käytää vain positiivisia reaalilukuja. Operaattoreita [+ - / * ( ) ^] voi käyttää vapaasti.\n" +
            "Valmiit funktiot: sqrt(arvo), sin(arvo), cos(arvo), tan(arvo)\n");
            komento = lukija.nextLine();
-           return kasittelija.infixPostfixiksi(komento);
+           try{
+               return kasittelija.infixPostfixiksi(komento);
+
+           } catch (Exception e){
+                System.out.println("VIRHE, TARKISTA LAUSEKE");
+            }
         }
 
         if(komento.equals("2")){

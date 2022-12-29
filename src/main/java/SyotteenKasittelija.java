@@ -188,7 +188,7 @@ public class SyotteenKasittelija {
             }
         }
 
-        String tulos = "Tulos: " + pino.pop();
+        String tulos = pino.pop();
 
         return tulos;
     }

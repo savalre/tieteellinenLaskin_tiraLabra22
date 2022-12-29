@@ -6,6 +6,22 @@ import static org.junit.Assert.assertEquals;
 public class SyotteenKasittelijaTest {
 
     public SyotteenKasittelija kasittelija;
+    public Muuttujat muuttujat = new Muuttujat();
+
+    private void oletaVirhe(String syote, Muuttujat muuttujat) {
+        try {
+            this.kasittelija.infixPostfixiksi(syote, muuttujat);
+        } catch (Exception ex) {
+            // Onnistui
+            return;
+        }
+        throw new RuntimeException("Ei virhettä: " + syote);
+    }
+
+    private void oletaTulos(String syote, double arvo) {
+        String tulos = this.kasittelija.infixPostfixiksi(syote, muuttujat);
+        assertEquals(arvo, Double.parseDouble(tulos), 1e-9);
+    }
 
     @Before
     public void setUp() {
@@ -13,43 +29,82 @@ public class SyotteenKasittelijaTest {
     }
 
     @Test
-    public void infixKasitellaanOikeinYhdellaOperaattorilla() {
-        kasittelija.infixPostfixiksi("3+2");
-        String infix = kasittelija.postfix;
-        String oletus = "32+";
-
-        assertEquals(oletus,infix);
+    public void oikeaTulosYhdellaOperaattorilla() {
+        String syote = "3+2";
+        oletaTulos(syote,5.0);
     }
 
     @Test
-    public void infixKasitellaanOikeinKahdellaEriarvoisellaOperaattorilla() {
-        kasittelija.infixPostfixiksi("3+2*5");
-        String infix = kasittelija.postfix;
-        String oletus = "325*+";
-
-        assertEquals(oletus,infix);
+    public void oikeaTulosKahdellaEriarvoisellaOperaattorilla() {
+        String syote = "3+2*5";
+        oletaTulos(syote,13.0);
     }
 
     @Test
-    public void infixKasitellaanOikeinSulkujenKanssa() {
-        kasittelija.infixPostfixiksi("3-7*(6/2+3)");
-        String infix = kasittelija.postfix;
-        String oletus = "3762/3+*-";
-
-        assertEquals(oletus,infix);
+    public void oikeaTulosSulkujenKanssa() {
+        String syote = "3-7*(6/2+3)";
+        oletaTulos(syote,-39.0);
     }
 
-    /*@Test
-    public void infixinKasittelyEpaonnistuuKunSyotteessaOnVainYksiSulku() {
-        String syote = kasittelija.kasitteleInfix("5-(3+2");
-        String oletus = "32+"; //KORJAA
+    @Test
+    public void oikeaTulosKunNegatiivinenLukuEkanaOperandina() {
+        String syote = "-1+8";
+        oletaTulos(syote,7);
+    }
 
-        assertEquals(oletus,syote);
-    }*/
+    @Test
+    public void oikeaTulosKunNegatiivinenLukuTokanaOperandina() {
+        String syote = "10 - -1";
+        oletaTulos(syote,11.0);
+    }
+
+    @Test
+    public void toinenOperandiOnNegatiivinenLuku() {
+        String syote = "1 + -1 * 5";
+        oletaTulos(syote,-4);
+    }
+
+    @Test
+    public void oikeaTulosKunEriarvoisetOperaattorit() {
+        String syote = "1+1*5";
+        oletaTulos(syote,6.0);
+    }
+
+
+    @Test
+    public void oikeaTulosKunSyotteessaTallennettuMuuttuja() {
+        muuttujat.lisaa("x","22");
+        String syote = "x+22";
+        oletaTulos(syote,44.0);
+    }
+
+    @Test
+    public void oikeaTulosPotenssilaskulla() {
+        String syote = "2^2";
+        oletaTulos(syote,4.0);
+    }
+
+    @Test
+    public void eiTulostaKunSyotteessaOnVainYksiSulku() {
+        String syote = "5-(3+2";
+        oletaVirhe(syote,muuttujat);
+    }
+
+    @Test
+    public void eiTulostaKunSyotteessaParittomatSulut() {
+        String syote = "5^((3+2)-2";
+        oletaVirhe(syote,muuttujat);
+    }
+
+    @Test
+    public void eiTulostaKunSyotteessaOlematonMuuttuja() {
+        String syote = "x+3";
+        oletaVirhe(syote,muuttujat);
+    }
 
     @Test
     public void operaattorinOllessaPlusTaiMiinusTarkeysOnYksi() {
-        int syote = kasittelija.operaattorinTarkeys('+');
+        int syote = kasittelija.operaattorinTarkeys("+");
         int tarkeys = 1;
 
         assertEquals(tarkeys,syote);
@@ -57,42 +112,69 @@ public class SyotteenKasittelijaTest {
 
     @Test
     public void operaattorinOllessaKertoTaiJakoTarkeysOnKaksi() {
-        int syote = kasittelija.operaattorinTarkeys('*');
+        int syote = kasittelija.operaattorinTarkeys("*");
         int tarkeys = 2;
 
         assertEquals(tarkeys,syote);
     }
 
     @Test
+    public void operaattorinOllessaPotenssiTarkeysOnKolme() {
+        int syote = kasittelija.operaattorinTarkeys("^");
+        int tarkeys = 3;
+
+        assertEquals(tarkeys,syote);
+    }
+
+    @Test
+    public void operaattorinOllessaFunktioTarkeysOnNelja() {
+        int syote = kasittelija.operaattorinTarkeys("sin");
+        int tarkeys = 4;
+
+        assertEquals(tarkeys,syote);
+    }
+
+    @Test
     public void operaattorinOllessaJokinMuuTarkeysOnMiinusYksi() {
-        int syote = kasittelija.operaattorinTarkeys('?');
+        int syote = kasittelija.operaattorinTarkeys("?");
         int tarkeys = -1;
 
         assertEquals(tarkeys,syote);
     }
 
-
     @Test
-    public void laskutoimitusOikeinYhdellaOperaattorilla() {
-        String tulos = kasittelija.kasittelePostfix("32+");
-        String oletus = "5";
-
-        assertEquals(oletus,tulos);
+    public void oikeaTulosSinFunktiolla() {
+        String syote = "sin(22)";
+        oletaTulos(syote,-0.008851309290403876);
     }
 
     @Test
-    public void laskutoimitusOikeinKahdellaEriarvoisellaOperaattorilla() {
-        String tulos = kasittelija.kasittelePostfix("325*+");
-        String oletus = "13";
-
-        assertEquals(oletus,tulos);
+    public void oikeaTulosTanFunktiolla() {
+        String syote = "tan(22)";
+        oletaTulos(syote,0.00885165604168446);
     }
 
     @Test
-    public void laskutoimitusOikeinKunLausekkeessaSulkuja() {
-        String tulos = kasittelija.kasittelePostfix("3762/3+*-");
-        String oletus = "-39";
+    public void oikeaTulosCosFunktiolla() {
+        String syote = "cos(22)";
+        oletaTulos(syote,-0.9999608263946371);
+    }
 
-        assertEquals(oletus,tulos);
+    @Test
+    public void oikeaTulosSqrtFunktiolla() {
+        String syote = "sqrt(22)";
+        oletaTulos(syote,4.69041575982343);
+    }
+
+    @Test
+    public void eiTulostaVirheelliselläFunktiolla() {
+        String syote = "asqrt(22)";
+        oletaVirhe(syote,muuttujat);
+    }
+
+    @Test
+    public void oikeaTulosTuplasuluilla() {
+        String syote = "(sqrt(22)-2)*3";
+        oletaTulos(syote,8.07124727947);
     }
 }

@@ -5,7 +5,7 @@ public class LaskinLaunch {
      *
      */
     public SyotteenKasittelija kasittelija;
-    public static Muuttujat muuttujat;
+    public Muuttujat muuttujat;
     public String tulos;
 
     public LaskinLaunch() {
@@ -29,12 +29,12 @@ public class LaskinLaunch {
                     "<0> Lopeta ohjelma");
             System.out.println("--------------------------------");
 
-            if(!(muuttujat.isEmpty())){
+            if(!(launch.muuttujat.isEmpty())){
                 System.out.println("Tallennetut muuttujat :");
-                System.out.println(muuttujat.toString());
+                System.out.println(launch.muuttujat.toString());
                 System.out.println("--------------------------------");
             }
-            String syote = launch.lueSyote();
+            String syote = launch.lueSyote(launch.muuttujat);
 
             if (syote.equals("loppu")) {
                 System.out.println("Näkemiin!");
@@ -47,9 +47,10 @@ public class LaskinLaunch {
 
     /**
      * @return
+     * @param muuttujat
      */
 
-    public String lueSyote() {
+    public String lueSyote(Muuttujat muuttujat) {
         Scanner lukija = new Scanner(System.in);
         String komento = lukija.nextLine();
 
@@ -62,7 +63,7 @@ public class LaskinLaunch {
            "Valmiit funktiot: sqrt(arvo), sin(arvo), cos(arvo), tan(arvo)\n");
            komento = lukija.nextLine();
            try{
-               tulos = kasittelija.infixPostfixiksi(komento);
+               tulos = kasittelija.infixPostfixiksi(komento,muuttujat);
                return tulos;
 
            } catch (Exception e){
@@ -75,13 +76,13 @@ public class LaskinLaunch {
             String nimi = lukija.nextLine();
             System.out.println("Syötä arvo: ");
             String arvo = lukija.nextLine();
-            muuttujat.lisaa(nimi,arvo);
+            this.muuttujat.lisaa(nimi,arvo);
         }
 
         if(komento.equals("3")){
             System.out.println("Mikä muuttuja poistetaan: ");
             String nimi = lukija.nextLine();
-            muuttujat.poista(nimi);
+            this.muuttujat.poista(nimi);
         }
 
         if(komento.contains("save")){
@@ -90,7 +91,7 @@ public class LaskinLaunch {
             }
 
             String[] muuttuja = komento.split(" ");
-            muuttujat.lisaa(muuttuja[1],tulos);
+            this.muuttujat.lisaa(muuttuja[1],tulos);
         }
 
         return "";

@@ -3,7 +3,7 @@ import java.util.HashMap;
 public class Muuttujat {
     public HashMap<String, String> muuttujat;
 
-    public Muuttujat(){
+    public Muuttujat() {
         this.muuttujat = new HashMap<>();
     }
 
@@ -20,7 +20,7 @@ public class Muuttujat {
     }
 
     public void lisaa(String nimi, String arvo) {
-        if(nimi.isEmpty() || arvo.isEmpty()){
+        if(nimi.isEmpty() || arvo.isEmpty()) {
             System.out.println("Tarkista muuttuja!\n");
         } else{
             this.muuttujat.put(nimi,arvo);
@@ -28,7 +28,7 @@ public class Muuttujat {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         String lista = muuttujat.toString();
         return lista;
     }

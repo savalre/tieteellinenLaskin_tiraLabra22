@@ -6,10 +6,12 @@ public class LaskinLaunch {
      */
     public SyotteenKasittelija kasittelija;
     public static Muuttujat muuttujat;
+    public String tulos;
 
     public LaskinLaunch() {
         this.kasittelija = new SyotteenKasittelija();
         muuttujat = new Muuttujat();
+        tulos = "";
     }
 
     /**
@@ -33,6 +35,7 @@ public class LaskinLaunch {
                 System.out.println("--------------------------------");
             }
             String syote = launch.lueSyote();
+
             if (syote.equals("loppu")) {
                 System.out.println("Näkemiin!");
                 break;
@@ -59,7 +62,8 @@ public class LaskinLaunch {
            "Valmiit funktiot: sqrt(arvo), sin(arvo), cos(arvo), tan(arvo)\n");
            komento = lukija.nextLine();
            try{
-               return kasittelija.infixPostfixiksi(komento);
+               tulos = kasittelija.infixPostfixiksi(komento);
+               return tulos;
 
            } catch (Exception e){
                 System.out.println("VIRHE, TARKISTA LAUSEKE");
@@ -78,6 +82,15 @@ public class LaskinLaunch {
             System.out.println("Mikä muuttuja poistetaan: ");
             String nimi = lukija.nextLine();
             muuttujat.poista(nimi);
+        }
+
+        if(komento.contains("save")){
+            if(tulos.length() == 0){
+                System.out.println("Ei tallennettavaa tulosta");
+            }
+
+            String[] muuttuja = komento.split(" ");
+            muuttujat.lisaa(muuttuja[1],tulos);
         }
 
         return "";

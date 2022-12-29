@@ -66,7 +66,10 @@ public class SyotteenKasittelija {
                 }
                 System.out.println("Operaattorin tarkeys  '" + merkki + "' = " + operaattorinTarkeys(merkki));
                 System.out.println("onko isompi pinossa" + (!(pino.isEmpty()) && operaattorinTarkeys(merkki) <= operaattorinTarkeys(pino.peek())));
-                while (!(pino.isEmpty()) && operaattorinTarkeys(merkki) <= operaattorinTarkeys(pino.peek())) {
+                while (!(pino.isEmpty()) && (
+                        (onkoVasenAssosiaatio(merkki) && operaattorinTarkeys(merkki) <= operaattorinTarkeys(pino.peek())) ||
+                                operaattorinTarkeys(merkki) < operaattorinTarkeys(pino.peek())
+                )) {
                     System.out.println("Operaattorin tarkeys jonossa " + pino.peek() + " = " + operaattorinTarkeys(pino.peek()));
 
                         postfix.add(pino.pop());
@@ -105,7 +108,7 @@ public class SyotteenKasittelija {
      * @param c Operaattori jonka tärkeys arvioidaan
      * @return kokonaisluku operaattorille asetettujen arvojen mukaan, tai -1 jos tuntematon operaattori
      */
-    public Integer operaattorinTarkeys(String c) {
+    public int operaattorinTarkeys(String c) {
 
         if ((c.equals("+")) || (c.equals("-"))) {
             return 1;
@@ -115,19 +118,44 @@ public class SyotteenKasittelija {
             return 2;
         }
 
-        if ((c.equals("^"))) {
+        if ((c.equals("_"))) {
             return 3;
         }
 
-        if (onFunktio(c)) {
+        if ((c.equals("^"))) {
             return 4;
         }
 
-        if ((c.equals("_"))) {
+        if (onFunktio(c)) {
             return 5;
         }
 
         return -1;
+    }
+
+    public boolean onkoVasenAssosiaatio(String c) {
+
+        if ((c.equals("+")) || (c.equals("-"))) {
+            return true;
+        }
+
+        if ((c.equals("*")) || (c.equals("/"))) {
+            return true;
+        }
+
+        if ((c.equals("^"))) {
+            return false;
+        }
+
+        if (onFunktio(c)) {
+            return true;
+        }
+
+        if ((c.equals("_"))) {
+            return false;
+        }
+
+        throw new RuntimeException("tuntematon operaattori");
     }
 
     /**

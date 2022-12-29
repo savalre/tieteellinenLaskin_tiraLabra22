@@ -119,17 +119,25 @@ public class SyotteenKasittelijaTest {
     }
 
     @Test
-    public void operaattorinOllessaPotenssiTarkeysOnKolme() {
-        int syote = kasittelija.operaattorinTarkeys("^");
+    public void operaattorinOllessaEtumerkkiMiinusTarkeysOnKolme() {
+        int syote = kasittelija.operaattorinTarkeys("_");
         int tarkeys = 3;
 
         assertEquals(tarkeys,syote);
     }
 
     @Test
-    public void operaattorinOllessaFunktioTarkeysOnNelja() {
-        int syote = kasittelija.operaattorinTarkeys("sin");
+    public void operaattorinOllessaPotenssiTarkeysOnNelja() {
+        int syote = kasittelija.operaattorinTarkeys("^");
         int tarkeys = 4;
+
+        assertEquals(tarkeys,syote);
+    }
+
+    @Test
+    public void operaattorinOllessaFunktioTarkeysOnViisi() {
+        int syote = kasittelija.operaattorinTarkeys("sin");
+        int tarkeys = 5;
 
         assertEquals(tarkeys,syote);
     }
@@ -171,6 +179,25 @@ public class SyotteenKasittelijaTest {
         String syote = "asqrt(22)";
         oletaVirhe(syote,muuttujat);
     }
+
+    @Test
+    public void eiTulostaSuluttomallaFunktiolla() {
+        String syote = "sqrt 22";
+        oletaVirhe(syote,muuttujat);
+    }
+
+    @Test
+    public void miinusSulkujenEdessä() {
+        String syote = "-(22)";
+        oletaTulos(syote,-22.0);
+    }
+
+    @Test
+    public void miinusFunktionEdessä() {
+        String syote = "-sqrt(9)";
+        oletaTulos(syote,-3.0);
+    }
+
 
     @Test
     public void oikeaTulosTuplasuluilla() {

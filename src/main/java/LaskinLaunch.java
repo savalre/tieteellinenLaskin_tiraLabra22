@@ -2,7 +2,7 @@ import java.util.*;
 
 public class LaskinLaunch {
     /**
-     * Laskimen käyttöliittymä
+     * Laskimen käyttöliittymä.
      */
     public SyotteenKasittelija kasittelija;
     public Muuttujat muuttujat;
@@ -30,7 +30,7 @@ public class LaskinLaunch {
                     "<0> Lopeta ohjelma");
             System.out.println("--------------------------------");
 
-            if(!(launch.muuttujat.isEmpty())){
+            if (!(launch.muuttujat.isEmpty())) {
                 System.out.println("Tallennetut muuttujat :");
                 System.out.println(launch.muuttujat.toString());
                 System.out.println("--------------------------------");
@@ -59,41 +59,41 @@ public class LaskinLaunch {
             return "loppu";
         }
 
-        if(komento.equals("1")){
+        if (komento.equals("1")) {
            System.out.println("Syötä laskutoimitus muodossa <A*B>. Voit käytää vain positiivisia reaalilukuja. Operaattoreita [+ - / * ( ) ^] voi käyttää vapaasti.\n" +
            "Valmiit funktiot: sqrt(arvo), sin(arvo), cos(arvo), tan(arvo)\n" +
                    "MUUTTUJAAN TALLENNUS: kirjoita laskutoimituksen jälkeen save <muuttujan nimi>, niin viimeisin laskutulos tallentuu muuttujiin");
            komento = lukija.nextLine();
-           try{
-               tulos = kasittelija.infixPostfixiksi(komento,muuttujat);
+           try {
+               tulos = kasittelija.infixPostfixiksi(komento, muuttujat);
                return tulos;
 
-           } catch (Exception e){
+           } catch (Exception e) {
                 System.out.println("VIRHE, TARKISTA LAUSEKE");
             }
         }
 
-        if(komento.equals("2")){
+        if (komento.equals("2")) {
             System.out.println("Syötä muuttujan nimi: ");
             String nimi = lukija.nextLine();
             System.out.println("Syötä arvo: ");
             String arvo = lukija.nextLine();
-            this.muuttujat.lisaa(nimi,arvo);
+            this.muuttujat.lisaa(nimi, arvo);
         }
 
-        if(komento.equals("3")){
+        if (komento.equals("3")) {
             System.out.println("Mikä muuttuja poistetaan: ");
             String nimi = lukija.nextLine();
             this.muuttujat.poista(nimi);
         }
 
-        if(komento.contains("save")){
-            if(tulos.length() != 0){
+        if (komento.contains("save")) {
+            if (tulos.length() != 0) {
                 String[] muuttuja = komento.split(" ");
-                if(muuttuja.length >= 2){
-                    this.muuttujat.lisaa(muuttuja[1],tulos);
+                if (muuttuja.length >= 2) {
+                    this.muuttujat.lisaa(muuttuja[1], tulos);
                 }
-            }else{
+            } else {
                     System.out.println("Ei tallennettavaa tulosta");
 
             }

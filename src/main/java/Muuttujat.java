@@ -2,7 +2,7 @@ import java.util.HashMap;
 
 public class Muuttujat {
     /**
-     * Luokka käsittelee käyttäjän tallentamia muuttujia
+     * Luokka käsittelee käyttäjän tallentamia muuttujia.
      */
     public HashMap<String, String> muuttujat;
 
@@ -11,16 +11,16 @@ public class Muuttujat {
     }
 
     /**
-     * Hakee avaimen perusteella HashMapista arvon
+     * Hakee avaimen perusteella HashMapista arvon.
      * @param avain HashMapiin tallennetun muuttujan nimi
      * @return avaimen arvo
      */
-    public String getArvo(String avain) {
+    public String getArvo(final String avain) {
         return muuttujat.get(avain);
     }
 
     /**
-     * Tarkistaa löytyykö HashMapista tallennettuja muuttujia
+     * Tarkistaa löytyykö HashMapista tallennettuja muuttujia.
      * @return true tai false riippuen onko HashMap tyhjä vai ei
      */
     public boolean isEmpty() {
@@ -28,30 +28,27 @@ public class Muuttujat {
     }
 
     /**
-     * Poistaa muuttuja-arvo-parin HashMapista
+     * Poistaa muuttuja-arvo-parin HashMapista.
      * @param nimi poistettavan muuttujan avain
      */
-    public void poista(String nimi) {
+    public void poista(final String nimi) {
         this.muuttujat.remove(nimi);
     }
 
     /**
-     * Lisää muuttujan ja arvon avain-arvo-parina HashMapiin. Mitään ei tallenneta jos nimi tai arvo on tyhjä
+     * Lisää muuttujan ja arvon avain-arvo-parina HashMapiin.
+     * Mitään ei tallenneta jos nimi tai arvo on tyhjä.
      * @param nimi muuttujan nimi
      * @param arvo muuttujaan yhdistettävä arvo
      */
-    public void lisaa(String nimi, String arvo) {
-        if(nimi.isEmpty() || arvo.isEmpty()) {
+    public void lisaa(final String nimi, final String arvo) {
+        if (nimi.isEmpty() || arvo.isEmpty()) {
             System.out.println("Tarkista muuttuja!\n");
-        } else{
-            this.muuttujat.put(nimi,arvo);
+        } else {
+            this.muuttujat.put(nimi, arvo);
         }
     }
 
-    /**
-     * toString-metodi
-     * @return String-muodossa kaikki HashMapista löytyvät avain-arvo-parit
-     */
     @Override
     public String toString() {
         return muuttujat.toString();

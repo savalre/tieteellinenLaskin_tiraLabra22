@@ -1,7 +1,14 @@
 # tieteellinenLaskin_tiraLabra22
 
-[Viikkoraportti 1](https://github.com/savalre/tieteellinenLaskin_tiraLabra22/blob/main/dokumentaatio/viikkoraportit/viikkoraportti1.md)<br><br>
-[Viikkoraportti 2](https://github.com/savalre/tieteellinenLaskin_tiraLabra22/blob/main/dokumentaatio/viikkoraportit/viikkoraportti2.md)<br><br>
-[Viikkoraportti 3](https://github.com/savalre/tieteellinenLaskin_tiraLabra22/blob/main/dokumentaatio/viikkoraportit/viikkoraportti3.md)<br><br>
-[Viikkoraportti 4](https://github.com/savalre/tieteellinenLaskin_tiraLabra22/blob/main/dokumentaatio/viikkoraportit/viikkoraportti4.md)<br><br>
-[Viikkoraportti 5](https://github.com/savalre/tieteellinenLaskin_tiraLabra22/blob/main/dokumentaatio/viikkoraportit/viikkoraportti5.md)<br><br>
+Ohjelman jar-tiedosto löytyy releaseista oikealta palkista. 
+
+Voit ajaa koneellasi ohjelman komennolla: 
+>java -jar <jar-nimi>.jar
+<br>
+Muut toiminnallisuudet löytyvät käyttöohjeesta dokumentaatio-kansiosta.
+<br>
+
+[Käyttöohje](https://github.com/savalre/tieteellinenLaskin_tiraLabra22/blob/main/dokumentaatio/k%C3%A4ytt%C3%B6ohje.md)<br>
+[Testausraportti](https://github.com/savalre/tieteellinenLaskin_tiraLabra22/blob/main/dokumentaatio/testausraportti.md)<br>
+[Toteutusdokumentti](https://github.com/savalre/tieteellinenLaskin_tiraLabra22/blob/main/dokumentaatio/toteutusdokumentti.md)<br>
+[Viikkoraportit](https://github.com/savalre/tieteellinenLaskin_tiraLabra22/blob/main/dokumentaatio/viikkoraportit)<br><br>

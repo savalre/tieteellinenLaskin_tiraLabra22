@@ -88,11 +88,14 @@ public class LaskinLaunch {
         }
 
         if(komento.contains("save")){
-            if(tulos.length() == 0){
-                System.out.println("Ei tallennettavaa tulosta");
-            }else{
+            if(tulos.length() != 0){
                 String[] muuttuja = komento.split(" ");
-                this.muuttujat.lisaa(muuttuja[1],tulos);
+                if(muuttuja.length >= 2){
+                    this.muuttujat.lisaa(muuttuja[1],tulos);
+                }
+            }else{
+                    System.out.println("Ei tallennettavaa tulosta");
+
             }
 
         }

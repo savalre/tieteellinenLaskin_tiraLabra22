@@ -2,7 +2,7 @@ import java.util.*;
 
 public class LaskinLaunch {
     /**
-     *
+     * Laskimen käyttöliittymä
      */
     public SyotteenKasittelija kasittelija;
     public Muuttujat muuttujat;
@@ -24,6 +24,7 @@ public class LaskinLaunch {
         while (true) {
             System.out.println("Komennot:\n" +
                     "<1> Kirjoita laskutoimitus\n" +
+                    "Tallenna laskutoimituksen tulos muuttujaan kirjoittamalla laskun jälkeen save <muuttujanNimi>\n" +
                     "<2> Lisää muuttuja\n" +
                     "<3> Poista muuttuja\n" +
                     "<0> Lopeta ohjelma");
@@ -46,8 +47,8 @@ public class LaskinLaunch {
     }
 
     /**
-     * @return
-     * @param muuttujat
+     * @return palauttaa komennosta riippuen joko syötetyn tuloksen, lopettaa ohjelman, tai tallentaa/poistaa muuttujan
+     * @param muuttujat käyttäjän tallentamat muuttujat
      */
 
     public String lueSyote(Muuttujat muuttujat) {
@@ -60,7 +61,8 @@ public class LaskinLaunch {
 
         if(komento.equals("1")){
            System.out.println("Syötä laskutoimitus muodossa <A*B>. Voit käytää vain positiivisia reaalilukuja. Operaattoreita [+ - / * ( ) ^] voi käyttää vapaasti.\n" +
-           "Valmiit funktiot: sqrt(arvo), sin(arvo), cos(arvo), tan(arvo)\n");
+           "Valmiit funktiot: sqrt(arvo), sin(arvo), cos(arvo), tan(arvo)\n" +
+                   "MUUTTUJAAN TALLENNUS: kirjoita laskutoimituksen jälkeen save <muuttujan nimi>, niin viimeisin laskutulos tallentuu muuttujiin");
            komento = lukija.nextLine();
            try{
                tulos = kasittelija.infixPostfixiksi(komento,muuttujat);
@@ -88,10 +90,11 @@ public class LaskinLaunch {
         if(komento.contains("save")){
             if(tulos.length() == 0){
                 System.out.println("Ei tallennettavaa tulosta");
+            }else{
+                String[] muuttuja = komento.split(" ");
+                this.muuttujat.lisaa(muuttuja[1],tulos);
             }
 
-            String[] muuttuja = komento.split(" ");
-            this.muuttujat.lisaa(muuttuja[1],tulos);
         }
 
         return "";

@@ -1,24 +1,45 @@
 import java.util.HashMap;
 
 public class Muuttujat {
+    /**
+     * Luokka käsittelee käyttäjän tallentamia muuttujia
+     */
     public HashMap<String, String> muuttujat;
 
     public Muuttujat() {
         this.muuttujat = new HashMap<>();
     }
 
+    /**
+     * Hakee avaimen perusteella HashMapista arvon
+     * @param avain HashMapiin tallennetun muuttujan nimi
+     * @return avaimen arvo
+     */
     public String getArvo(String avain) {
         return muuttujat.get(avain);
     }
 
+    /**
+     * Tarkistaa löytyykö HashMapista tallennettuja muuttujia
+     * @return true tai false riippuen onko HashMap tyhjä vai ei
+     */
     public boolean isEmpty() {
         return muuttujat.isEmpty();
     }
 
+    /**
+     * Poistaa muuttuja-arvo-parin HashMapista
+     * @param nimi poistettavan muuttujan avain
+     */
     public void poista(String nimi) {
         this.muuttujat.remove(nimi);
     }
 
+    /**
+     * Lisää muuttujan ja arvon avain-arvo-parina HashMapiin. Mitään ei tallenneta jos nimi tai arvo on tyhjä
+     * @param nimi muuttujan nimi
+     * @param arvo muuttujaan yhdistettävä arvo
+     */
     public void lisaa(String nimi, String arvo) {
         if(nimi.isEmpty() || arvo.isEmpty()) {
             System.out.println("Tarkista muuttuja!\n");
@@ -27,9 +48,12 @@ public class Muuttujat {
         }
     }
 
+    /**
+     * toString-metodi
+     * @return String-muodossa kaikki HashMapista löytyvät avain-arvo-parit
+     */
     @Override
     public String toString() {
-        String lista = muuttujat.toString();
-        return lista;
+        return muuttujat.toString();
     }
 }

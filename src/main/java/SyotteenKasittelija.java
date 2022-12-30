@@ -1,25 +1,26 @@
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
+/**
+ * Luokka käsittelee käyttäjän syöttämän laskutoimituksen. Annettu laskutoimitus
+ * on String. Konstruktorissa alustetaan algoritmin käyttämä pino, sekä String
+ * postfix johon syötteen postfix-muoto tallentuu.
+ */
 public class SyotteenKasittelija {
-    /**
-     * Luokka käsittelee käyttäjän syöttämän laskutoimituksen. Annettu laskutoimitus
-     * on String-muotoinen. Konstruktorissa alustetaan algoritmin käyttämä pino, sekä String
-     * postfix johon syötteen postfix-muoto tallentuu.
-     */
-    public Stack<String> pino;
+
+    private final Stack<String> pino;
 
     public SyotteenKasittelija() {
         this.pino = new Stack<>();
     }
 
-
     /**
      * Shunting yard -algoritmi käsittelee tässä metodissa infix-muotoisen, käyttäjän antaman
      * syötteen postfix-muotoon myöhempää evaluaatiota varten.
      *
-     * @param syote käyttäjän terminaaliin syöttämä laskutoimitus (muoto esim. 3+2)
-     * @param muuttujat
+     * @param syote     käyttäjän terminaaliin syöttämä laskutoimitus (muoto esim. 3+2)
+     * @param muuttujat käyttäjän tallentamat muuttujat
      * @return metodi palauttaa sitä kutsuneelle käyttöliittymälle postfixin evaluaation tuloksen.
      */
     public String infixPostfixiksi(String syote, Muuttujat muuttujat) {
@@ -29,12 +30,11 @@ public class SyotteenKasittelija {
         String[] palat = syote.split("(?<=[-^+*/(),])|(?=[-^+*/(),])");
         String edellinen = null;
 
-        for (int i = 0; i < palat.length; i++) {
-            String merkki = palat[i].trim();
+        for (String s : palat) {
+            String merkki = s.trim();
             if (merkki.isEmpty()) {
                 continue;
             }
-            System.out.println("Merkki '" + merkki + "'  pino=" + pino);
 
             if (muuttujat.muuttujat.containsKey(merkki)) {
                 merkki = muuttujat.getArvo(merkki);
@@ -42,62 +42,43 @@ public class SyotteenKasittelija {
 
             if (onNumero(merkki)) {
                 postfix.add(merkki);
-                System.out.println("Numero " + merkki + " => " + postfix + "  pino=" + pino);
 
             } else if (merkki.equals("(")) {
-                //System.out.println("löytyi (");
                 pino.push(merkki);
 
             } else if (merkki.equals(")")) {
-                //System.out.println("löytyi )");
                 while (!pino.isEmpty() && !(pino.peek().equals("("))) {
                     postfix.add(pino.pop());
-                    //System.out.println("postfix on nyt " + postfix);
                 }
 
                 pino.pop();
 
             } else {
-                if (merkki.equals("-")) {
-                    System.out.println(String.format("Löytyi -: i=%d edellinen=%s", i, edellinen));
-                }
                 if (merkki.equals("-") && (edellinen == null || (!onNumero(edellinen) && !edellinen.equals(")")))) {
                     merkki = "_";
                 }
-                System.out.println("Operaattorin tarkeys  '" + merkki + "' = " + operaattorinTarkeys(merkki));
-                System.out.println("onko isompi pinossa" + (!(pino.isEmpty()) && operaattorinTarkeys(merkki) <= operaattorinTarkeys(pino.peek())));
                 while (!(pino.isEmpty()) && (
                         (onkoVasenAssosiaatio(merkki) && operaattorinTarkeys(merkki) <= operaattorinTarkeys(pino.peek())) ||
                                 operaattorinTarkeys(merkki) < operaattorinTarkeys(pino.peek())
                 )) {
-                    System.out.println("Operaattorin tarkeys jonossa " + pino.peek() + " = " + operaattorinTarkeys(pino.peek()));
-
-                        postfix.add(pino.pop());
-
-                   // System.out.println("postfix " + postfix);
+                    postfix.add(pino.pop());
                 }
-                if(onFunktio(merkki)){
-                   // System.out.println("lisatty pinoon " + (merkki+","));
-                    this.pino.push(merkki);
-                }else{
-                   // System.out.println("lisatty pinoon " + merkki);
 
+                if (onFunktio(merkki)) {
+                    this.pino.push(merkki);
+                } else {
                     this.pino.push(merkki);
 
-                }
-                if (merkki.equals("-")) {
-                    System.out.println("Miinus => " + postfix + "  pino=" + pino);
                 }
 
 
             }
-               edellinen = merkki;
+            edellinen = merkki;
         }
 
         while (!pino.isEmpty()) {
             postfix.add(pino.pop());
         }
-        System.out.println("postfix" + postfix);
         return kasittelePostfix(postfix);
     }
 
@@ -133,6 +114,13 @@ public class SyotteenKasittelija {
         return -1;
     }
 
+    /**
+     * Tarkistetaan onko operaattori vasemmalle assosioitunut
+     *
+     * @param c tarkistettava operaattori
+     * @return true tai false riippuen assosiatiivisuudesta
+     */
+
     public boolean onkoVasenAssosiaatio(String c) {
 
         if ((c.equals("+")) || (c.equals("-"))) {
@@ -155,7 +143,7 @@ public class SyotteenKasittelija {
             return false;
         }
 
-        throw new RuntimeException("tuntematon operaattori");
+        throw new RuntimeException("Tuntematon operaattori");
     }
 
     /**
@@ -165,29 +153,25 @@ public class SyotteenKasittelija {
      * @return palauttaa laskutoimituksen tuloksen metodille infixPostfixiksi, joka palauttaa sen käyttäjälle
      */
     public String kasittelePostfix(List<String> postfix) {
-        //String[] lasku = postfix.split("(?<=[-+*/^()_,])|(?=[-+*/^()_,])");
-       // System.out.println(Arrays.toString(lasku));
 
-        for (int i = 0; i < postfix.size(); i++) {
-            String merkki = postfix.get(i);
+        for (String merkki : postfix) {
+            if (onFunktio(merkki)) {
+                double operandi = Double.parseDouble(this.pino.pop());
+                double tulos = 0.0;
 
-           if (onFunktio(merkki)){
-                Double operandi = Double.parseDouble(this.pino.pop());
-                Double tulos = 0.0;
-
-                if (merkki.equals("sqrt")){
+                if (merkki.equals("sqrt")) {
                     tulos = Math.sqrt(operandi);
                 }
 
-                if (merkki.equals("sin")){
+                if (merkki.equals("sin")) {
                     tulos = Math.sin(operandi);
                 }
 
-                if (merkki.equals("cos")){
+                if (merkki.equals("cos")) {
                     tulos = Math.cos(operandi);
                 }
 
-                if (merkki.equals("tan")){
+                if (merkki.equals("tan")) {
                     tulos = Math.tan(operandi);
                 }
 
@@ -203,9 +187,9 @@ public class SyotteenKasittelija {
 
             } else {
                 String operaattori = merkki;
-                Double toinenOperandi = Double.parseDouble(this.pino.pop());
-                Double ensimmainenOperandi = Double.parseDouble(this.pino.pop());
-                Double tulos = 0.0;
+                double toinenOperandi = Double.parseDouble(this.pino.pop());
+                double ensimmainenOperandi = Double.parseDouble(this.pino.pop());
+                double tulos = 0.0;
 
                 if (operaattori.equals("^")) {
                     tulos = Math.pow(ensimmainenOperandi, toinenOperandi);
@@ -235,7 +219,12 @@ public class SyotteenKasittelija {
         return tulos;
     }
 
-
+    /**
+     * Tarkistetaan onko syötteen osa numero vai ei
+     *
+     * @param pala syötteen osa jota tarkastellaan
+     * @return true tai false
+     */
     private static boolean onNumero(String pala) {
         try {
             Double.parseDouble(pala);
@@ -245,15 +234,15 @@ public class SyotteenKasittelija {
         }
     }
 
-    private static boolean onFunktio(String pala) {
-        System.out.println("PALA '"+ pala + "'");
-        if(pala.equals("sqrt") ||  pala.equals("sin") || pala.equals("cos") || pala.equals("tan")){
-           // System.out.println("CONTAINS");
-            return true;
-        }
+    /**
+     * Tarkistetaan onko syötteen osa funktio vai ei
+     *
+     * @param pala syötteen osa jota tarkastellaan
+     * @return true tai false
+     */
 
-        //System.out.println("NOT CONTAINS");
-        return false;
+    private static boolean onFunktio(String pala) {
+        return pala.equals("sqrt") || pala.equals("sin") || pala.equals("cos") || pala.equals("tan");
     }
 
 }

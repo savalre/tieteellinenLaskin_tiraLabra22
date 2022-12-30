@@ -9,21 +9,33 @@ import java.util.Stack;
  */
 public class SyotteenKasittelija {
 
+    /**
+     * Shunting yardissa käytettävä pino.
+     */
     private final Stack<String> pino;
 
+    /**
+     * Luokan konstruktori.
+     */
     public SyotteenKasittelija() {
         this.pino = new Stack<>();
     }
 
     /**
-     * Shunting yard -algoritmi käsittelee tässä metodissa infix-muotoisen, käyttäjän antaman
-     * syötteen postfix-muotoon myöhempää evaluaatiota varten.
+     * Shunting yard -algoritmi käsittelee tässä metodissa infix-muotoisen,
+     * käyttäjän antaman syötteen postfix-muotoon myöhempää evaluaatiota
+     * varten.
      *
-     * @param syote     käyttäjän terminaaliin syöttämä laskutoimitus (muoto esim. 3+2)
+     * @param syote     käyttäjän terminaaliin syöttämä laskutoimitus (muoto
+     *                  esim. 3+2)
      * @param muuttujat käyttäjän tallentamat muuttujat
-     * @return metodi palauttaa sitä kutsuneelle käyttöliittymälle postfixin evaluaation tuloksen.
+     * @return metodi palauttaa sitä kutsuneelle käyttöliittymälle postfixin
+     * evaluaation tuloksen.
      */
-    public String infixPostfixiksi(String syote, Muuttujat muuttujat) {
+    public String infixPostfixiksi(
+            final String syote,
+            final Muuttujat muuttujat
+    ) {
 
         List<String> postfix = new ArrayList<>();
 
@@ -54,23 +66,27 @@ public class SyotteenKasittelija {
                 pino.pop();
 
             } else {
-                if (merkki.equals("-") && (edellinen == null || (!onNumero(edellinen) && !edellinen.equals(")")))) {
+                if (merkki.equals("-") && (edellinen == null
+                        || (!onNumero(edellinen) && !edellinen.equals(")")))) {
                     merkki = "_";
                 }
-                while (!(pino.isEmpty()) && (
-                        (onkoVasenAssosiaatio(merkki) && operaattorinTarkeys(merkki) <= operaattorinTarkeys(pino.peek())) ||
-                                operaattorinTarkeys(merkki) < operaattorinTarkeys(pino.peek())
-                )) {
-                    postfix.add(pino.pop());
+                while (!(pino.isEmpty())){
+                    int tarkeysNyt = operaattorinTarkeys(merkki);
+                    int tarkeysPino = operaattorinTarkeys(pino.peek());
+                    if((onkoVasenAssosiaatio(merkki)
+                            && tarkeysNyt <= tarkeysPino)
+                            || tarkeysNyt < tarkeysPino){
+                        postfix.add(pino.pop());
+                    } else {
+                        break;
+                    }
                 }
-
                 if (onFunktio(merkki)) {
                     this.pino.push(merkki);
                 } else {
                     this.pino.push(merkki);
 
                 }
-
 
             }
             edellinen = merkki;
@@ -79,17 +95,19 @@ public class SyotteenKasittelija {
         while (!pino.isEmpty()) {
             postfix.add(pino.pop());
         }
+
         return kasittelePostfix(postfix);
     }
 
     /**
-     * Metodi palauttaa operaattorin "tärkeyttä" vastaavan kokonaisluvun. Suuremman tärkeyden omaavat operaatiot
-     * suoritetaan ensin.
+     * Metodi palauttaa operaattorin "tärkeyttä" vastaavan kokonaisluvun.
+     * Suuremman tärkeyden omaavat operaatiot suoritetaan ensin.
      *
      * @param c Operaattori jonka tärkeys arvioidaan
-     * @return kokonaisluku operaattorille asetettujen arvojen mukaan, tai -1 jos tuntematon operaattori
+     * @return kokonaisluku operaattorille asetettujen arvojen mukaan, tai -1
+     * jos tuntematon operaattori
      */
-    public int operaattorinTarkeys(String c) {
+    public int operaattorinTarkeys(final String c) {
 
         if ((c.equals("+")) || (c.equals("-"))) {
             return 1;
@@ -115,13 +133,13 @@ public class SyotteenKasittelija {
     }
 
     /**
-     * Tarkistetaan onko operaattori vasemmalle assosioitunut
+     * Tarkistetaan onko operaattori vasemmalle assosioitunut.
      *
      * @param c tarkistettava operaattori
      * @return true tai false riippuen assosiatiivisuudesta
      */
 
-    public boolean onkoVasenAssosiaatio(String c) {
+    public boolean onkoVasenAssosiaatio(final String c) {
 
         if ((c.equals("+")) || (c.equals("-"))) {
             return true;
@@ -147,12 +165,15 @@ public class SyotteenKasittelija {
     }
 
     /**
-     * Tässä suoritetaan postfix-muotoisen käyttäjäsyötteen evaluaatio, eli suoritetaan itse laskutoimitus.
+     * Tässä suoritetaan postfix-muotoisen käyttäjäsyötteen evaluaatio, eli
+     * suoritetaan itse laskutoimitus.
      *
-     * @param postfix käyttäjän syötteestä luotu postfix-notaation mukainen laskutoimitus
-     * @return palauttaa laskutoimituksen tuloksen metodille infixPostfixiksi, joka palauttaa sen käyttäjälle
+     * @param postfix käyttäjän syötteestä luotu postfix-notaation mukainen
+     *                laskutoimitus
+     * @return palauttaa laskutoimituksen tuloksen metodille infixPostfixiksi,
+     * joka palauttaa sen käyttäjälle
      */
-    public String kasittelePostfix(List<String> postfix) {
+    public String kasittelePostfix(final List<String> postfix) {
 
         for (String merkki : postfix) {
             if (onFunktio(merkki)) {
@@ -188,7 +209,8 @@ public class SyotteenKasittelija {
             } else {
                 String operaattori = merkki;
                 double toinenOperandi = Double.parseDouble(this.pino.pop());
-                double ensimmainenOperandi = Double.parseDouble(this.pino.pop());
+                double ensimmainenOperandi =
+                        Double.parseDouble(this.pino.pop());
                 double tulos = 0.0;
 
                 if (operaattori.equals("^")) {
@@ -220,12 +242,12 @@ public class SyotteenKasittelija {
     }
 
     /**
-     * Tarkistetaan onko syötteen osa numero vai ei
+     * Tarkistetaan onko syötteen osa numero vai ei.
      *
      * @param pala syötteen osa jota tarkastellaan
      * @return true tai false
      */
-    private static boolean onNumero(String pala) {
+    private static boolean onNumero(final String pala) {
         try {
             Double.parseDouble(pala);
             return true;
@@ -235,13 +257,12 @@ public class SyotteenKasittelija {
     }
 
     /**
-     * Tarkistetaan onko syötteen osa funktio vai ei
+     * Tarkistetaan onko syötteen osa funktio vai ei.
      *
      * @param pala syötteen osa jota tarkastellaan
      * @return true tai false
      */
-
-    private static boolean onFunktio(String pala) {
+    private static boolean onFunktio(final String pala) {
         return pala.equals("sqrt") || pala.equals("sin") || pala.equals("cos") || pala.equals("tan");
     }
 

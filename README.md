@@ -1,12 +1,11 @@
 # tieteellinenLaskin_tiraLabra22
 
-Ohjelman jar-tiedosto löytyy releaseista oikealta palkista. 
+[Ohjelman viimeisin versio](https://github.com/savalre/tieteellinenLaskin_tiraLabra22/releases/tag/final)<br>
 
 Voit ajaa koneellasi ohjelman komennolla: 
->java -jar <jar-nimi>.jar
-<br>
+>java -jar jarNimi.jar
 Muut toiminnallisuudet löytyvät käyttöohjeesta dokumentaatio-kansiosta.
-<br>
+<br><br>
 
 [Käyttöohje](https://github.com/savalre/tieteellinenLaskin_tiraLabra22/blob/main/dokumentaatio/k%C3%A4ytt%C3%B6ohje.md)<br>
 [Testausraportti](https://github.com/savalre/tieteellinenLaskin_tiraLabra22/blob/main/dokumentaatio/testausraportti.md)<br>

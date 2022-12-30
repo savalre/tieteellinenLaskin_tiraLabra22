@@ -3,7 +3,7 @@
 [Ohjelman viimeisin versio](https://github.com/savalre/tieteellinenLaskin_tiraLabra22/releases/tag/final)<br>
 
 Voit ajaa koneellasi ohjelman komennolla: 
->java -jar jarNimi.jar
+>java -jar tieteellinenLaskin-1.0-SNAPSHOT.jar <br>
 Muut toiminnallisuudet löytyvät käyttöohjeesta dokumentaatio-kansiosta.
 <br><br>
 
